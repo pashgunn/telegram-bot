@@ -25,6 +25,15 @@ try {
     // Enable MySQL if required
      $telegram->enableMySql($config['mysql']);
 
+    \Longman\TelegramBot\TelegramLog::initErrorLog(__DIR__ . '/' . 'Market_Place_Laravel_bot' . '_error.log');
+    \Longman\TelegramBot\TelegramLog::initDebugLog(__DIR__ . '/' . 'Market_Place_Laravel_bot' . '_debug.log');
+    \Longman\TelegramBot\TelegramLog::initUpdateLog(__DIR__ . '/' . 'Market_Place_Laravel_bot' . '_update.log');
+
+    // Load all command-specific configurations
+    foreach ($config['commands']['configs'] as $command_name => $command_config) {
+        $telegram->setCommandConfig($command_name, $command_config);
+    }
+
     // Handle telegram webhook request
     $telegram->handle();
 
@@ -33,9 +42,9 @@ try {
     Longman\TelegramBot\TelegramLog::error($e);
 
     // Uncomment this to output any errors (ONLY FOR DEVELOPMENT!)
-    // echo $e;
+     echo $e;
 } catch (Longman\TelegramBot\Exception\TelegramLogException $e) {
     // Uncomment this to output log initialisation errors (ONLY FOR DEVELOPMENT!)
-    // echo $e;
+     echo $e;
 }
 ?>

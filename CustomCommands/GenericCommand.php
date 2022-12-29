@@ -15,16 +15,6 @@ use Longman\TelegramBot\Exception\TelegramException;
 class GenericCommand extends SystemCommand
 {
     /**
-     * @var string
-     */
-    protected $name = 'generic';
-
-    /**
-     * @var string
-     */
-    protected $description = 'Handles generic commands or is executed by default when a command is not found';
-
-    /**
      * Main command execution
      *
      * @return ServerResponse
@@ -33,13 +23,9 @@ class GenericCommand extends SystemCommand
     public function execute(): ServerResponse
     {
         $message = $this->getMessage();
-        $user_id = $message->getFrom()->getId();
         $command = $message->getCommand();
 
-        if (stripos($command, 'whois') === 0 && $this->telegram->isAdmin($user_id)) {
-            return $this->telegram->executeCommand('whois');
-        }
 
-        return $this->replyToChat("Command /{$command} not found.. :(");
+        return $this->replyToChat("Команда /{$command} не найдена.. :(");
     }
 }
